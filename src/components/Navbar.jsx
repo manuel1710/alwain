@@ -50,7 +50,7 @@ const Navbar = () => {
                   aria-current="page"
                   to="/"
                 >
-                  <i class="fa-solid fa-house"></i>&nbsp;Upload
+                  <i className="fa-solid fa-house"></i>&nbsp;Upload
                 </Link>
               </li>
 
@@ -60,7 +60,7 @@ const Navbar = () => {
                   aria-current="page"
                   to="/gallery"
                 >
-                  <i class="fa-solid fa-bars-progress"></i>&nbsp;Gallery
+                  <i className="fa-solid fa-bars-progress"></i>&nbsp;Gallery
                 </Link>
               </li>
             </ul>
