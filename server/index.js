@@ -14,7 +14,9 @@ const connection = require("./db");
 const imageSend = require('./routes/imageSend');
 var imgModel = require('./model');
 
-app.use(cors());
+app.use(cors({
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}));
 
 //configurations to read Image Data
 app.use(bodyParser.urlencoded({extended:false}));
