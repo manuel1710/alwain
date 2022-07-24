@@ -25,7 +25,8 @@ function Home() {
     
     
 
-    const url = "http://localhost:5000/file/upload";
+    // const url = "http://localhost:5000/file/upload";
+    const url = "https://alwainserver.herokuapp.com/file/upload";
     try{
       // const resp = await axios.post(url, file, {name:name,folder:folder,uploadDate: Date.toString()});
       const resp = await axios.post(url, formData, {
