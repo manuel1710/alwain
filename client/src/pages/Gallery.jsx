@@ -6,8 +6,8 @@ import {Buffer} from 'buffer';
 // import { SRLWrapper } from "simple-react-lightbox";
 
 function Gallery() {
-  // const url = 'http://localhost:5000/file/upload';
-  const url = "https://alwainserver.herokuapp.com/file/upload";
+  const url = 'http://localhost:5000/file/upload';
+  // const url = "https://alwainserver.herokuapp.com/file/upload";
   const [imageList, setImageList] = useState([]);
   const [imageName, setImageName] = useState([]);
   // const [itemName, setItemName] = useState([]);

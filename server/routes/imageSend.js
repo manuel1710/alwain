@@ -39,10 +39,12 @@ router.post("/upload", upload.single("file"),(req,res)=>{
         originalname: req.file.originalname,
         img:
         {
-        data: Buffer.from(JSON.stringify(req.file)),
-        // data: [req.file.buffer],
-        // data: fs.readFileSync(req.file),
+        // data: Buffer.from(JSON.stringify(path.join(__dirname,req.file.originalname))),
+        // data: Buffer.from(path.join(__dirname,req.file.originalname)),
         // data: fs.readFileSync(path.join(__dirname,'..','uploads', req.file.originalname)),
+        // data: fs.readFileSync(path.join(process.env.DB,'fs.files', req.file.originalname)),
+        data: req.file,
+        // data: fs.readFileSync(req.file),
         contentType: req.file.mimetype,
         },
     });
