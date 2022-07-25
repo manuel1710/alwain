@@ -9,10 +9,41 @@ function Home() {
   const [imageUpload, setImageUpload] = useState(null);
   const [folderName, setFolderName] = useState(null);
 
+  // const input = document.querySelector('#file');
+// const reader = new FileReader();
+// var fileByteArray = [];
+
+// function change(event) {
+//   reader.readAsArrayBuffer(event.target.files[0]);
+//   reader.onloadend = (evt) => {
+//     if (evt.target.readyState === FileReader.DONE) {
+//       const arrayBuffer = evt.target.result,
+//         array = new Uint8Array(arrayBuffer);
+//         console.log(array);
+//         fileByteArray=array;
+//         console.log(fileByteArray);
+//     }
+//   }
+// };
+
   const uploadImage = async (event) => {
     event.preventDefault();
     const form = document.querySelector("form");
+    const namewise = document.querySelector('#name').value;
     const formData = new FormData(form);
+
+  //   console.log(fileByteArray);
+  //   reader.readAsArrayBuffer(event.target.file[0]);
+  //   reader.onloadend = (evt) => {
+  //   if (evt.target.readyState === FileReader.DONE) {
+  //     const arrayBuffer = evt.target.result,
+  //       array = new Uint8Array(arrayBuffer);
+  //       console.log(array);
+  //       fileByteArray=array;
+  //       console.log(fileByteArray);
+  //   }
+  // }
+  //   formData.append('filearray', fileByteArray);
 
     if (imageUpload == null) {
       alert("No Image Selected");
@@ -22,9 +53,13 @@ function Home() {
       alert("No Folder Selected");
       return;
     }
+    if (namewise ==''){
+      alert('No Name for File');
+      return;
+    }
     
     
-
+    // const url = 'http://alwainserver1.eba-nqppamva.us-east-1.elasticbeanstalk.com/file/upload';
     const url = "http://localhost:5000/file/upload";
     // const url = "https://alwainserver.herokuapp.com/file/upload";
     try{
@@ -62,6 +97,8 @@ function Home() {
                   accept="image/*"
                   onChange={(event) => {
                     setImageUpload(event.target.files[0]);
+                    // console.log(event.target.files[0]);
+                    // change(event);
                   }}
                 />
                 <label htmlFor="file" className="btn-danger m-3">Choose File to Upload</label>

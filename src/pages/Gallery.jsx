@@ -7,6 +7,7 @@ import {Buffer} from 'buffer';
 
 function Gallery() {
   const url = 'http://localhost:5000/file/upload';
+  // const url = 'http://alwainserver1.eba-nqppamva.us-east-1.elasticbeanstalk.com/file/upload';
   // const url = "https://alwainserver.herokuapp.com/file/upload";
   const [imageList, setImageList] = useState([]);
   const [imageName, setImageName] = useState([]);
@@ -24,6 +25,7 @@ function Gallery() {
       .get(url,{params:{tag: ''}})
       .then((res) => setData(res.data))
       .catch((err) => console.log(err, "it has an error"));
+      console.log(data);
   }
 
   function getFolder() {
@@ -76,12 +78,15 @@ function Gallery() {
         </div>
         <div className="row">
           {data.map((singleData,i) => {
-            var base64String1 = Buffer.from(singleData.img.data.data, 'utf8').toString('base64');
+            var base64String1 = Buffer.from(singleData.img.data, 'utf8').toString('base64');
+            // var file = new File([singleData.img.data],singleData.img.data.filename , {type:singleData.img.contentType});
             return (
               <div key={i} className="col-lg-3 col-md-6 col-sm-12 bord p-1 text-center">
-                {/* <SRLWrapper> */}
+      
                 <img className="w-100 p-1" src={`data:${singleData.img.contentType};base64,${base64String1}`} width="300" />
-                {/* </SRLWrapper> */}
+                
+                {/* <img className="w-100 p-1" src={URL.createObjectURL(file)} width="300" /> */}
+                
                 <span>{`Name of File: ${singleData.name}`}</span>
                 <br />
                 <span>{`Uploaded on: ${singleData.uploadDate}`}</span>
