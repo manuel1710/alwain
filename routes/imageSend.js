@@ -2,27 +2,34 @@
 const multer = require("multer");
 const router = require("express").Router();
 var mongoose = require('mongoose');
+const {GridFsStorage} = require('multer-gridfs-storage');
 const fs = require('fs');
 const path = require('path') 
+const Buffer = require('buffer').Buffer;
 
 var imageSchema = require('../model');
 
 
 //storage area for uploads
-const storage = multer.diskStorage({
-    destination: (req,file,cb) =>{
-        cb(null,'uploads')
-    },
-    filename:(req,file,cb)=>{
-        cb(null,file.originalname)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: (req,file,cb) =>{
+//         cb(null,'uploads')
+//     },
+//     filename:(req,file,cb)=>{
+//         cb(null,file.originalname)
+//     }
+// })
+// const upload = multer({storage:storage});
 
-const upload = multer({storage:storage});
+// Create a storage object with a given configuration
+const storage = new GridFsStorage({ url:process.env.DB });
 
+// Set multer storage engine to the newly created object
+const upload = multer({ storage:storage });
 
 
 router.post("/upload", upload.single("file"),(req,res)=>{
+// router.post("/upload",(req,res)=>{
     // console.log(Date().toString());
     const saveImage = new imageSchema({
         _id: mongoose.Types.ObjectId(),
@@ -32,18 +39,22 @@ router.post("/upload", upload.single("file"),(req,res)=>{
         originalname: req.file.originalname,
         img:
         {
-        // data: fs.readFileSync("../uploads/" + req.file.filename),
-        data: fs.readFileSync(path.join(__dirname,'..','uploads', req.file.originalname)),
+        data: Buffer.from(JSON.stringify(req.file)),
+        // data: [req.file.buffer],
+        // data: fs.readFileSync(req.file),
+        // data: fs.readFileSync(path.join(__dirname,'..','uploads', req.file.originalname)),
         contentType: req.file.mimetype,
         },
     });
+    // console.log(saveImage.img.data);
     saveImage.save().then((res)=>{
         console.log('image is saved');
+        // console.log(saveImage.img.data);
     })
     .catch((err)=>{
         console.log(err, 'error has occured');
     });
-    res.send('Image is Saved');
+    res.send(['Image is Saved',saveImage.img.data, typeof(req.file)]);
     // res.send((req.file.filename));
 
     // if(req.file === undefined) return res.send("you must select a file.");
